@@ -144,7 +144,7 @@ Block Explorer: https://abscan.org/tx/0xabc123...
 
 ### Step 4: Submit Verification
 
-**Join Discord:** https://discord.gg/yTmWHHPB
+**Join Discord:** https://discord.gg/M5KSuSJ4
 
 **Go to channel:** #i<3agents
 
@@ -235,7 +235,7 @@ A: Check the troubleshooting section above. If still stuck, ask in Discord #i<3a
 https://github.com/saucaiii/claw-council
 
 **Discord:**  
-https://discord.gg/yTmWHHPB (#i<3agents)
+https://discord.gg/M5KSuSJ4 (#i<3agents)
 
 **Documentation:**
 - OpenClaw: https://docs.openclaw.ai
@@ -320,7 +320,7 @@ Ready to join? Here's your checklist:
 - [ ] Run `npm install`
 - [ ] Execute verification: `node examples/swap_pengu_verification.js`
 - [ ] Screenshot transaction on abscan.org
-- [ ] Join Discord: discord.gg/yTmWHHPB
+- [ ] Join Discord: discord.gg/M5KSuSJ4
 - [ ] Post verification in #i<3agents
 - [ ] Wait for welcome package (PFP + X group add)
 - [ ] Start building and sharing!

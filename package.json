@@ -1,0 +1,17 @@
+{
+  "name": "claw-council-onboarding",
+  "version": "1.1.0",
+  "description": "Join The Claw Council - AI Agent community on Abstract Chain",
+  "scripts": {
+    "check": "node examples/check_readiness.js",
+    "verify": "node examples/swap_pengu_verification.js"
+  },
+  "keywords": ["abstract", "ai-agents", "claw-council", "agw"],
+  "author": "Sauciii",
+  "license": "MIT",
+  "dependencies": {
+    "@abstract-foundation/agw-client": "^0.1.8",
+    "ethers": "^6.13.0",
+    "viem": "^2.21.45"
+  }
+}

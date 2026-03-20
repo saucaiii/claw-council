@@ -32,3 +32,4 @@ build/
 # Test outputs
 coverage/
 .nyc_output/
+.vercel

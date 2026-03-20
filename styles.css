@@ -1,0 +1,558 @@
+/* Windows 95/98 Aesthetic with Unicorn.meme inspiration */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Bungee&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'VT323', monospace;
+    background: linear-gradient(45deg, 
+        #ff00ff 0%, #00ffff 25%, #ffff00 50%, 
+        #ff00ff 75%, #00ffff 100%);
+    background-size: 400% 400%;
+    animation: rainbowBg 10s ease infinite;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="%23ff00ff"/></svg>'), auto;
+}
+
+@keyframes rainbowBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Mouse Trail Canvas */
+#mouseTrail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Side Images */
+.side-images {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 1;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 1rem 0;
+}
+
+.side-images::-webkit-scrollbar {
+    width: 8px;
+}
+
+.side-images::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.side-images::-webkit-scrollbar-thumb {
+    background: rgba(255, 0, 255, 0.6);
+    border-radius: 4px;
+}
+
+.left-side {
+    left: 1rem;
+    top: 1rem;
+}
+
+.right-side {
+    right: 1rem;
+    top: 1rem;
+}
+
+/* GIF Columns (between images and windows) */
+.gif-column {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 1;
+    padding: 1rem 0;
+}
+
+.left-gifs {
+    left: 200px;
+    top: 1rem;
+}
+
+.right-gifs {
+    right: 200px;
+    top: 1rem;
+}
+
+.member-img {
+    width: 150px;
+    height: auto;
+    border: 3px solid #000;
+    box-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(255, 0, 255, 0.6);
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.member-img:nth-child(even) {
+    animation-delay: 0.5s;
+}
+
+.member-img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 
+        6px 6px 0 rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 0, 255, 1);
+}
+
+/* GIF Boxes */
+.gif-box {
+    width: 250px;
+    margin-bottom: 1rem;
+}
+
+.red-box,
+.green-box,
+.yellow-box,
+.cyan-box {
+    /* No background or border */
+}
+
+.lobster-gif {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Windows Container */
+.windows-container {
+    position: relative;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    z-index: 10;
+}
+
+/* Windows 95/98 Window Style */
+.window {
+    background: #c0c0c0;
+    border: 2px outset #dfdfdf;
+    box-shadow: 
+        inset 1px 1px 0 #fff,
+        inset -1px -1px 0 #808080,
+        4px 4px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.main-window {
+    z-index: 30;
+    margin-bottom: 2rem;
+}
+
+.second-window {
+    margin-bottom: 2rem;
+    z-index: 20;
+}
+
+.third-window {
+    margin-bottom: 2rem;
+    z-index: 25;
+}
+
+.fourth-window {
+    z-index: 15;
+}
+
+.window-header {
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.window-title {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.window-controls {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.window-controls button {
+    background: #c0c0c0;
+    border: 1px outset #fff;
+    width: 18px;
+    height: 16px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.window-controls button:active {
+    border-style: inset;
+}
+
+.window-body {
+    padding: 0.5rem;
+    background: #c0c0c0;
+}
+
+.window-content {
+    background: white;
+    border: 2px inset #808080;
+    padding: 1.5rem;
+    min-height: 200px;
+}
+
+/* Content Styles */
+.main-title {
+    font-family: 'Bungee', cursive;
+    font-size: 3rem;
+    text-align: center;
+    color: #000080;
+    margin-bottom: 1rem;
+    text-shadow: 
+        2px 2px 0 #ff00ff,
+        4px 4px 0 #00ffff;
+    letter-spacing: 0.05em;
+}
+
+.tagline {
+    font-family: 'Bungee', cursive;
+    font-size: 2rem;
+    text-align: center;
+    color: #ff00ff;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000080;
+    margin-bottom: 1.5rem;
+}
+
+.contract-address {
+    background: #000;
+    color: #00ff00;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    border: 2px solid #008000;
+}
+
+.contract-address marquee {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.pitch {
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #ff0000;
+}
+
+.description {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    line-height: 1.6;
+    color: #000;
+}
+
+.warning {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.warning a {
+    color: #0000ff;
+    text-decoration: underline;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.warning a:visited {
+    color: #800080;
+}
+
+/* Windows 95 Button */
+.win95-button {
+    background: #c0c0c0;
+    border: 2px outset #fff;
+    padding: 0.5rem 1.5rem;
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 0 #000;
+    margin: 0.5rem;
+}
+
+.win95-button:hover {
+    background: #d0d0d0;
+}
+
+.win95-button:active {
+    border-style: inset;
+    box-shadow: inset 1px 1px 0 #000;
+}
+
+.win95-button.primary {
+    font-weight: bold;
+}
+
+.win95-button.full-width {
+    width: calc(100% - 1rem);
+    margin: 1rem 0.5rem 0.5rem;
+}
+
+.win95-button.small {
+    padding: 0.25rem 1rem;
+    font-size: 1rem;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+/* Second/Third Window Content */
+.window h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #000080;
+    line-height: 1.6;
+}
+
+.hearts {
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-window {
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.instruction-box {
+    background: #ffffe0;
+    border: 3px solid #000;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.instruction-box p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.skill-link {
+    color: #0000ff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.steps {
+    margin: 1.5rem 0;
+}
+
+.step {
+    background: #fff8dc;
+    border: 2px inset #808080;
+    padding: 1rem;
+    margin: 0.75rem 0;
+    font-size: 1.1rem;
+}
+
+.step strong {
+    color: #000080;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.step code {
+    background: #000;
+    color: #00ff00;
+    padding: 0.2rem 0.5rem;
+    font-family: 'VT323', monospace;
+    border: 1px solid #008000;
+}
+
+.step a {
+    color: #0000ff;
+    text-decoration: underline;
+}
+
+.rewards {
+    background: #ffffe0;
+    border: 2px solid #ffd700;
+    padding: 1rem;
+    margin: 1.5rem 0;
+}
+
+.rewards h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #ff00ff;
+    line-height: 1.6;
+}
+
+.rewards ul {
+    list-style: none;
+    padding: 0;
+}
+
+.rewards li {
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+/* Agent Stats */
+.agent-stats {
+    background: #000;
+    border: 2px solid #00ff00;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: 'VT323', monospace;
+}
+
+.stat-item {
+    color: #00ff00;
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}
+
+.stat-item strong {
+    color: #ffff00;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .left-side {
+        left: 0.25rem;
+    }
+    
+    .right-side {
+        right: 0.25rem;
+    }
+    
+    .left-gifs {
+        left: 120px;
+    }
+    
+    .right-gifs {
+        right: 120px;
+    }
+    
+    .member-img {
+        width: 100px;
+    }
+    
+    .gif-box {
+        width: 180px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .gif-column {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-images {
+        display: none;
+    }
+    
+    .windows-container {
+        padding: 1rem;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+}
+
+/* Left align all window content */
+.window-content {
+    text-align: left;
+}
+
+.window-content ul {
+    text-align: left;
+}
+
+.window-content p {
+    text-align: left;
+}
+
+.window-content h2 {
+    text-align: left;
+}
+
+/* Make modal non-scrollable and compact */
+.modal-window .window-body {
+    overflow: visible;
+}
+
+.modal-content {
+    max-height: none;
+    overflow: visible;
+}

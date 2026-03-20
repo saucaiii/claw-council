@@ -4,7 +4,7 @@
  * ===============================
  * One-shot script to verify your agent can transact on Abstract.
  *
- * Swaps ETH → ~8.888 PENGU on Aborean DEX via AGW.
+ * Swaps ETH → ~8.888 PENGU on Uniswap V3 via AGW.
  *
  * Requirements:
  *   - Node.js 18+
@@ -20,15 +20,17 @@
 const { ethers } = require('ethers');
 
 // Abstract Chain Configuration
-// NOTE: Verify this is the current Aborean Router on abscan.org before use.
-// Aborean may upgrade their router — check https://aborean.fi for the latest.
-const ABOREAN_ROUTER = '0xE8142D2f82036B6FC1e79E4aE85cF53FBFfDC998';
+// Uniswap V3 SwapRouter02 (Official deployment on Abstract)
+const UNISWAP_V3_ROUTER = '0x7712FA47387542819d4E35A23f8116C90C18767C';
 const WETH_ADDRESS = '0x3439153EB7AF838Ad19d56E1571FBD09333C2809';
 const PENGU_ADDRESS = '0x9eBe3A824Ca958e4b3Da772D2065518f009CBA62';
+const POOL_FEE = 3000; // 0.3% fee tier
 
-// Aborean Router ABI (swap function only)
+// Uniswap V3 SwapRouter02 ABI (exactInputSingle + unwrapWETH9)
 const SWAP_ABI = [
-  'function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts)'
+  'function exactInputSingle((address tokenIn, address tokenOut, uint24 fee, address recipient, uint256 amountIn, uint256 amountOutMinimum, uint160 sqrtPriceLimitX96)) external payable returns (uint256 amountOut)',
+  'function unwrapWETH9(uint256 amountMinimum, address recipient) external payable',
+  'function multicall(bytes[] calldata data) external payable returns (bytes[] memory results)'
 ];
 
 async function swapForVerification() {
@@ -71,36 +73,41 @@ async function swapForVerification() {
     process.exit(1);
   }
 
-  // Build swap transaction
+  // Build swap transaction (Uniswap V3 style)
   const router = new ethers.Interface(SWAP_ABI);
 
   const amountIn = ethers.parseEther('0.002');
   const minPenguOut = ethers.parseEther('8');
-  const swapPath = [WETH_ADDRESS, PENGU_ADDRESS];
   const deadline = Math.floor(Date.now() / 1000) + 600; // 10 min
 
   console.log('📋 Transaction Details:');
   console.log('   Chain: Abstract (ChainID 2741)');
-  console.log('   Router: Aborean DEX');
+  console.log('   Router: Uniswap V3 SwapRouter02');
   console.log(`   AGW Address: ${agwAddress}`);
   console.log(`   Amount In: ${ethers.formatEther(amountIn)} ETH`);
   console.log(`   Expected Out: ~8.888 PENGU`);
+  console.log(`   Pool Fee: 0.3%`);
   console.log('');
 
-  // Encode swap calldata — recipient is the AGW address (not zero address)
-  const data = router.encodeFunctionData('swapExactETHForTokens', [
-    minPenguOut,
-    swapPath,
-    agwAddress,
-    deadline
-  ]);
+  // Encode Uniswap V3 exactInputSingle params
+  const params = {
+    tokenIn: WETH_ADDRESS,
+    tokenOut: PENGU_ADDRESS,
+    fee: POOL_FEE,
+    recipient: agwAddress,
+    amountIn: amountIn,
+    amountOutMinimum: minPenguOut,
+    sqrtPriceLimitX96: 0 // No price limit
+  };
+
+  const data = router.encodeFunctionData('exactInputSingle', [params]);
 
   console.log('🔐 Sending transaction...');
   console.log('');
 
   try {
     const txHash = await abstractClient.sendTransaction({
-      to: ABOREAN_ROUTER,
+      to: UNISWAP_V3_ROUTER,
       data: data,
       value: amountIn,
     });
@@ -124,7 +131,7 @@ async function swapForVerification() {
     console.log('1. Open the block explorer link above');
     console.log('2. Take a screenshot showing:');
     console.log('   ✓ Transaction FROM your AGW address');
-    console.log('   ✓ Transaction TO Aborean Router');
+    console.log('   ✓ Transaction TO Uniswap V3 Router');
     console.log('   ✓ PENGU tokens received');
     console.log('   ✓ Transaction confirmed');
     console.log('');

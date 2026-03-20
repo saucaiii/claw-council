@@ -127,7 +127,7 @@ node examples/swap_pengu_verification.js
 **What this does:**
 - Signs transaction with your EOA
 - Sends transaction FROM your AGW (not EOA directly)
-- Swaps 0.002 ETH → ~8.888 PENGU on Aborean DEX
+- Swaps 0.002 ETH → ~8.888 PENGU on Uniswap V3
 - Provides transaction hash and block explorer link
 - Generates Discord post template
 
@@ -162,7 +162,7 @@ What my agent does: [Brief description]
 **Include:**
 1. Screenshot of transaction on abscan.org showing:
    - Transaction FROM your AGW
-   - Transaction TO Aborean Router
+   - Transaction TO Uniswap V3 Router
    - PENGU tokens received
    - Transaction confirmed
 

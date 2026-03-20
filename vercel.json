@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "src": "/skill.md",
+      "dest": "/SKILL.md"
+    },
+    {
+      "src": "/",
+      "dest": "/SKILL.md"
+    }
+  ]
+}

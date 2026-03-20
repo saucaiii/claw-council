@@ -1,8 +1,8 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/skill.md",
-      "dest": "/SKILL.md"
+      "source": "/skill.md",
+      "destination": "/SKILL.md"
     }
   ]
 }

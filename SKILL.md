@@ -41,6 +41,8 @@ The premier community for AI agent builders on Abstract Chain. We share builds, 
 
 ## Membership Requirements
 
+> **Already have an agent that meets all the requirements below?** Skip ahead to [Step 5: Submit Verification](#step-5-submit-verification) to apply directly.
+
 To join The Claw Council, you need:
 
 ### ✅ Requirement 1: OpenClaw Agent
@@ -86,7 +88,7 @@ Prove your agent can transact by swapping for 8.888 PENGU on Abstract.
 
 ---
 
-## How to Join (5 Steps)
+## How to Join (6 Steps)
 
 ### Step 1: Get the Verification Skill
 
@@ -142,51 +144,11 @@ Block Explorer: https://abscan.org/tx/0xabc123...
 
 ---
 
-### Step 4: Submit Verification
+### Step 4: Register Your Agent with ERC-8004
 
-**Join Discord:** https://discord.gg/M5KSuSJ4
+Register your agent's on-chain identity on Abstract using the **ERC-8004: Trustless Agents** standard — a protocol for agent discovery, reputation, and trust across organizational boundaries.
 
-**Go to channel:** #i<3agents
-
-**Post format:**
-```
-🦞 Claw Council Application
-
-Agent Name: [Your Agent Name]
-AGW Address: 0x...
-Verification TX: https://abscan.org/tx/0x...
-
-What my agent does: [Brief description]
-```
-
-**Include:**
-1. Screenshot of transaction on abscan.org showing:
-   - Transaction FROM your AGW
-   - Transaction TO Uniswap V3 Router
-   - PENGU tokens received
-   - Transaction confirmed
-
----
-
-### Step 5: Get Verified
-
-Once approved by Claw Council admins, you receive:
-
-✅ **Membership confirmation** in Discord  
-✅ **Custom PFP** - Lobster hat 🦞 + "I ❤️ agents" hoodie  
-✅ **X group chat access** - Abstract AI Agent Builders  
-✅ **Discord role** - Claw Council member  
-✅ **Builder support** - Private channels and weekly calls  
-✅ **Early access** - New Abstract agent tooling  
-✅ **ERC-8004 guidance** - AI agent identity & reputation protocol  
-
----
-
-## ERC-8004: Register Your Agent on Abstract
-
-Agents can now register their on-chain identity on Abstract using the **ERC-8004: Trustless Agents** standard — a protocol for agent discovery, reputation, and trust across organizational boundaries.
-
-### What is ERC-8004?
+#### What is ERC-8004?
 
 ERC-8004 provides three lightweight registries deployed as per-chain singletons:
 
@@ -194,7 +156,7 @@ ERC-8004 provides three lightweight registries deployed as per-chain singletons:
 - **Reputation Registry** — Standard interface for posting and fetching feedback signals, enabling trust scoring and auditor networks
 - **Validation Registry** — Hooks for independent validation (staker re-execution, zkML verifiers, TEE oracles)
 
-### Abstract Chain Contracts
+#### Abstract Chain Contracts
 
 **Identity Registry:**
 ```
@@ -206,14 +168,14 @@ ERC-8004 provides three lightweight registries deployed as per-chain singletons:
 0x8004BAa17C55a88189AE136b182e5fdA19dE9b63
 ```
 
-### How to Register
+#### How to Register
 
 1. **Prepare your agent's registration file** (JSON with name, description, image, service endpoints)
 2. **Call `register(agentURI)`** on the Identity Registry contract from your agent's wallet
 3. **Set your agent wallet** with `setAgentWallet()` — proves control via EIP-712 signature
 4. **Advertise endpoints** — MCP, A2A, OASF, ENS, DIDs, or any custom service
 
-### Registration File Format
+#### Registration File Format
 
 Your `agentURI` should resolve to a JSON file:
 
@@ -240,12 +202,52 @@ Your `agentURI` should resolve to a JSON file:
 }
 ```
 
-### Resources
+#### Resources
 
 - **Browse registered agents:** [8004scan.io](https://www.8004scan.io/agents?chain=2741)
 - **Official EIP:** [EIP-8004: Trustless Agents](https://eips.ethereum.org/EIPS/eip-8004)
 - **Best Practices & Data Profiles:** [best-practices.8004scan.io](https://best-practices.8004scan.io)
 - **Follow:** [@8004_scan](https://x.com/8004_scan) for the latest registered agents on Abstract
+
+---
+
+### Step 5: Submit Verification
+
+**Join Discord:** https://discord.gg/M5KSuSJ4
+
+**Go to channel:** #i<3agents
+
+**Post format:**
+```
+🦞 Claw Council Application
+
+Agent Name: [Your Agent Name]
+AGW Address: 0x...
+Verification TX: https://abscan.org/tx/0x...
+
+What my agent does: [Brief description]
+```
+
+**Include:**
+1. Screenshot of transaction on abscan.org showing:
+   - Transaction FROM your AGW
+   - Transaction TO Uniswap V3 Router
+   - PENGU tokens received
+   - Transaction confirmed
+
+---
+
+### Step 6: Get Verified
+
+Once approved by Claw Council admins, you receive:
+
+✅ **Membership confirmation** in Discord  
+✅ **Custom PFP** - Lobster hat 🦞 + "I ❤️ agents" hoodie  
+✅ **X group chat access** - Abstract AI Agent Builders  
+✅ **Discord role** - Claw Council member  
+✅ **Builder support** - Private channels and weekly calls  
+✅ **Early access** - New Abstract agent tooling  
+✅ **ERC-8004 guidance** - AI agent identity & reputation protocol  
 
 ---
 

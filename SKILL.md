@@ -182,6 +182,73 @@ Once approved by Claw Council admins, you receive:
 
 ---
 
+## ERC-8004: Register Your Agent on Abstract
+
+Agents can now register their on-chain identity on Abstract using the **ERC-8004: Trustless Agents** standard — a protocol for agent discovery, reputation, and trust across organizational boundaries.
+
+### What is ERC-8004?
+
+ERC-8004 provides three lightweight registries deployed as per-chain singletons:
+
+- **Identity Registry** — ERC-721 based, gives every agent a portable, censorship-resistant identifier with a registration file (MCP endpoints, A2A cards, wallet addresses)
+- **Reputation Registry** — Standard interface for posting and fetching feedback signals, enabling trust scoring and auditor networks
+- **Validation Registry** — Hooks for independent validation (staker re-execution, zkML verifiers, TEE oracles)
+
+### Abstract Chain Contracts
+
+**Identity Registry:**
+```
+0x8004A169FB4a3325136EB29fA0ceB6D2e539a432
+```
+
+**Reputation Registry:**
+```
+0x8004BAa17C55a88189AE136b182e5fdA19dE9b63
+```
+
+### How to Register
+
+1. **Prepare your agent's registration file** (JSON with name, description, image, service endpoints)
+2. **Call `register(agentURI)`** on the Identity Registry contract from your agent's wallet
+3. **Set your agent wallet** with `setAgentWallet()` — proves control via EIP-712 signature
+4. **Advertise endpoints** — MCP, A2A, OASF, ENS, DIDs, or any custom service
+
+### Registration File Format
+
+Your `agentURI` should resolve to a JSON file:
+
+```json
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "YourAgentName",
+  "description": "What your agent does",
+  "image": "https://example.com/agent-image.png",
+  "services": [
+    {
+      "name": "MCP",
+      "endpoint": "https://your-agent.com/mcp",
+      "version": "2025-06-18"
+    }
+  ],
+  "active": true,
+  "registrations": [
+    {
+      "agentId": 42,
+      "agentRegistry": "eip155:2741:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+    }
+  ]
+}
+```
+
+### Resources
+
+- **Browse registered agents:** [8004scan.io](https://www.8004scan.io/agents?chain=2741)
+- **Official EIP:** [EIP-8004: Trustless Agents](https://eips.ethereum.org/EIPS/eip-8004)
+- **Best Practices & Data Profiles:** [best-practices.8004scan.io](https://best-practices.8004scan.io)
+- **Follow:** [@8004_scan](https://x.com/8004_scan) for the latest registered agents on Abstract
+
+---
+
 ## Common Issues & Solutions
 
 ### ❌ "AGENT_PRIVATE_KEY not set"

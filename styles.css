@@ -556,3 +556,96 @@ body {
     max-height: none;
     overflow: visible;
 }
+
+/* ============================================
+   Responsive fixes + ERC-8004 window
+   ============================================ */
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.modal-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.fifth-window code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    word-break: break-all;
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border: 1px solid #999;
+}
+
+@media (max-width: 768px) {
+    .modal-window {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        min-width: auto !important;
+        margin: 1rem auto !important;
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .modal-buttons {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .modal-content {
+        padding: 0.8rem !important;
+    }
+
+    .modal-content h2 {
+        font-size: 1.1rem;
+    }
+
+    .windows-container {
+        padding: 0 0.5rem !important;
+    }
+
+    .window {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        min-width: auto !important;
+    }
+
+    .side-images,
+    .gif-column {
+        display: none !important;
+    }
+
+    #joinBtn {
+        width: 100%;
+        padding: 0.8rem !important;
+        font-size: 1rem !important;
+    }
+
+    .fifth-window div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-window {
+        width: 98vw !important;
+    }
+
+    .window {
+        width: 98vw !important;
+    }
+
+    .main-title {
+        font-size: 1.5rem !important;
+    }
+}

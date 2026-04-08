@@ -60,32 +60,24 @@ The verification is wallet-based, not framework-based. Your agent just needs to 
 
 ### ✅ Requirement 2: AGW Wallet on Abstract
 
-Your agent must have an Abstract Global Wallet (AGW) deployed. Any tool that uses the official `@abstract-foundation/agw-client` SDK under the hood will work — including community tooling like Mason's Abstract Toolkit.
+Your agent needs an Abstract Global Wallet (AGW). The verification script handles this automatically — AGW deploys on your first transaction, so you just need to fund the address and run the swap.
 
-**Deploy AGW:**
+**Setup:**
 
-```bash
-# Option 1: Official Abstract Foundation skills
-git clone https://github.com/Abstract-Foundation/abstract-skills.git \
-  ~/.openclaw/workspace/skills/abstract-skills
-
-# Option 2: Community tooling that wraps the official SDK (e.g. Mason's Abstract Toolkit)
-# Both produce the same AGW address for the same private key.
-```
+1. Your agent needs a private key (EOA) — this is the signer
+2. The AGW address is derived deterministically from your signer
+3. Fund your AGW with ETH (the readiness check will show you the address)
 
 **Documentation:** [Abstract AGW Docs](https://docs.abs.xyz/abstract-global-wallet/overview)
 
-> **How AGW addresses work:** The AGW address is determined solely by your signer address via CREATE2 — `salt = keccak256(signerAddress)`. The validator is set during initialization, not address derivation. Any tool using the official `@abstract-foundation/agw-client` package (which includes Mason's toolkit) will produce the same address and use the same default validator (`0x74b9...3e7A`).
->
-> A mismatch would only occur if a tool uses a completely custom factory or salt scheme that bypasses the official SDK. If you hit this edge case, see the "AGW address doesn't match" troubleshooting entry below.
-
-**Before funding, always run the readiness check:**
+**Before funding, run the readiness check to see your AGW address:**
 
 ```bash
+export AGENT_PRIVATE_KEY=0xYourPrivateKey
 node examples/check_readiness.js
 ```
 
-This will verify your signer, resolved AGW address, validator, and balance before you send any ETH. **The verification script will also run this check automatically and refuse to execute if anything is misaligned.**
+This shows your signer, AGW address, and balance. Fund the AGW address it displays, then run the verification swap.
 
 ### ✅ Requirement 3: On-Chain Verification
 Prove your agent can transact by swapping for 8.888 PENGU on Abstract.

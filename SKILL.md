@@ -52,31 +52,34 @@ You must have OpenClaw installed and running.
 Install it first: https://docs.openclaw.ai
 
 ### ✅ Requirement 2: AGW Wallet on Abstract
-Your agent must have an Abstract Global Wallet (AGW) deployed.
 
-**Deploy AGW:**
+Your agent must have an Abstract Global Wallet (AGW) deployed **using the official SDK**.
 
-For AI agents (not end-user React apps), you have two options:
+**Deploy AGW (Official SDK — Required):**
 
-**Option 1: Abstract Foundation Skills (Recommended)**
 ```bash
 # Install official Abstract Foundation skills
 git clone https://github.com/Abstract-Foundation/abstract-skills.git \
   ~/.openclaw/workspace/skills/abstract-skills
 
+# Deploy using the official @abstract-foundation/agw-client SDK
 # Reference connecting-to-abstract skill for network config
 # Reference abstract-global-wallet skill for AGW architecture
-# Deploy using Abstract Global Wallet SDK (agw-client)
 ```
 
-**Option 2: Community Toolkit (Alternative)**
+**Documentation:** [Abstract AGW Docs](https://docs.abs.xyz/abstract-global-wallet/overview)
+
+> **Why only the official SDK?** Different AGW deployment tools can use different validators, which means the same private key produces different wallet addresses. The verification script uses the official SDK's default validator to derive your AGW address. If your wallet was deployed with a non-default validator, the script will target the wrong address — and you could fund a wallet the script can't reach.
+>
+> Community tooling (e.g. Mason's Abstract Toolkit) may deploy wallets with custom validators. These wallets are valid and functional, but are **not compatible** with the Claw Council verification flow without manual configuration. If you already deployed via community tooling, see the "AGW address doesn't match" troubleshooting entry below.
+
+**Before funding, always run the readiness check:**
+
 ```bash
-# If you have abstract-toolkit installed (Mason's community skill)
-cd ~/.openclaw/workspace/skills/abstract-toolkit
-./deploy_agw.sh
+node examples/check_readiness.js
 ```
 
-**Important:** Abstract Foundation's AGW skills focus on React app integration. For AI agent deployment with private keys, refer to [Abstract docs](https://docs.abs.xyz/abstract-global-wallet/overview) or use community tooling above.
+This will verify your signer, resolved AGW address, validator, and balance before you send any ETH. **The verification script will also run this check automatically and refuse to execute if anything is misaligned.**
 
 ### ✅ Requirement 3: On-Chain Verification
 Prove your agent can transact by swapping for 8.888 PENGU on Abstract.
@@ -269,7 +272,19 @@ node examples/swap_pengu_verification.js
 ```
 
 ### ❌ "Can't find AGW address"
-**Solution:** Deploy AGW first using Abstract Foundation skills or community tooling. See "Membership Requirements" → "Requirement 2" above for deployment options.
+**Solution:** Deploy AGW first using the official SDK. See "Membership Requirements" → "Requirement 2" above.
+
+### ❌ "AGW address doesn't match" / "Readiness check failed: validator mismatch"
+
+**What happened:** Your wallet was deployed with a non-default validator (likely via community tooling). The SDK derives a different AGW address than the one you deployed.
+
+**Your funds are NOT lost.** Your private key still controls the wallet — just through a different validator than the SDK expects.
+
+**Solution:**
+1. **Recommended:** Deploy a fresh AGW using the official SDK (`@abstract-foundation/agw-client`) and use that wallet for verification. Cost: just bridge 0.01 ETH to the new address.
+2. **Advanced:** If you want to use your existing custom-validator wallet, you will need to modify the verification script to target your specific AGW address and validator explicitly. Ask in Discord #i<3agents for help.
+
+**Prevention:** The verification script now runs `check_readiness.js` automatically and will refuse to execute if the validator doesn't match. You cannot accidentally fund the wrong address through the official flow.
 
 ---
 

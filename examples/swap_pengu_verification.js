@@ -18,6 +18,7 @@
  */
 
 const { ethers } = require('ethers');
+const { runReadinessCheck, printReport } = require('./check_readiness.js');
 
 // Abstract Chain Configuration
 // Uniswap V3 SwapRouter02 (Official deployment on Abstract)
@@ -49,6 +50,31 @@ async function swapForVerification() {
     console.error('  node examples/swap_pengu_verification.js');
     process.exit(1);
   }
+
+  // --- SAFETY GATE: verify wallet compatibility before proceeding ---
+  console.log('Running readiness check...\n');
+  const readiness = await runReadinessCheck(privateKey);
+  printReport(readiness);
+
+  if (!readiness.ready) {
+    console.error('\n❌ READINESS CHECK FAILED — swap aborted.\n');
+    if (!readiness.validatorOk) {
+      console.error('Your AGW wallet was deployed with a non-default validator.');
+      console.error('The SDK resolves a DIFFERENT address than your deployed wallet.');
+      console.error('');
+      console.error('This means this script would target the wrong wallet.');
+      console.error('');
+      console.error('Options:');
+      console.error('  1. Deploy a new AGW using the official SDK and fund that instead');
+      console.error('  2. Ask in Discord #i<3agents for help with custom validator wallets');
+    } else {
+      console.error(readiness.error || 'Unknown readiness failure.');
+    }
+    process.exit(1);
+  }
+
+  console.log(`✅ Readiness check passed. AGW: ${readiness.agwAddress}\n`);
+  // --- END SAFETY GATE ---
 
   // Initialize AGW client to get the wallet address
   console.log('🔐 Initializing AGW client...');

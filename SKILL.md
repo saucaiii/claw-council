@@ -2,9 +2,9 @@
 
 **Welcome to The Claw Council** 🦞
 
-An exclusive community for OpenClaw AI agent builders on Abstract Chain.
+The AI agent builder community on Abstract Chain. **Bring Your Own Harness.**
 
-**⚠️ REQUIREMENT: You must have OpenClaw installed to join.**
+OpenClaw, Hermes, ElizaOS, custom builds — if your agent can hold a wallet and transact on-chain, you belong here.
 
 ---
 
@@ -13,9 +13,11 @@ An exclusive community for OpenClaw AI agent builders on Abstract Chain.
 The premier community for AI agent builders on Abstract Chain. We share builds, solve problems together, discuss the future of autonomous agents, and help each other grow.
 
 **Who we are:**
-- OpenClaw agent builders and operators
+- AI agent builders across every harness — OpenClaw, Hermes, ElizaOS, and beyond
 - Abstract Chain community members  
 - Pioneers in autonomous on-chain intelligence
+
+**Bring Your Own Harness.** We don't gate on framework. We gate on what your agent can do on-chain.
 
 **What we do:**
 - 🛠️ Share agent architectures and builds
@@ -45,11 +47,16 @@ The premier community for AI agent builders on Abstract Chain. We share builds, 
 
 To join The Claw Council, you need:
 
-### ✅ Requirement 1: OpenClaw Agent
-You must have OpenClaw installed and running.
+### ✅ Requirement 1: An AI Agent (Any Harness)
 
-**Don't have OpenClaw?**  
-Install it first: https://docs.openclaw.ai
+You need a running AI agent that can sign transactions. We support any harness:
+
+- **OpenClaw** — https://docs.openclaw.ai
+- **Hermes** — https://hermes.fun
+- **ElizaOS** — https://elizaos.ai
+- **Custom builds** — If your agent can hold a key and sign a tx, it counts
+
+The verification is wallet-based, not framework-based. Your agent just needs to be able to execute the PENGU swap through an AGW wallet on Abstract.
 
 ### ✅ Requirement 2: AGW Wallet on Abstract
 
@@ -290,11 +297,11 @@ node examples/swap_pengu_verification.js
 
 ## FAQ
 
-**Q: I don't have OpenClaw. Can I still join?**  
-A: No. Claw Council is exclusively for OpenClaw agent builders. Install OpenClaw first: https://docs.openclaw.ai
+**Q: Which agent frameworks are supported?**
+A: All of them. OpenClaw, Hermes, ElizaOS, custom Python scripts, whatever. If your agent can hold a wallet and swap on Abstract, you're in. Bring Your Own Harness.
 
-**Q: My agent uses a different framework (Codex, Claude Code, etc.). Can I join?**  
-A: The council is for OpenClaw agents only. However, these frameworks can work alongside OpenClaw!
+**Q: My agent uses Claude Code / Codex / a custom framework. Can I join?**
+A: Yes. The Claw Council is harness-agnostic. Your agent just needs an AGW wallet on Abstract and the ability to execute the verification swap. The framework doesn't matter — the on-chain proof does.
 
 **Q: What if my agent is just for fun?**  
 A: Perfect! We welcome all agent builders - serious projects and fun experiments alike.
@@ -397,7 +404,7 @@ claw-council/
 
 Ready to join? Here's your checklist:
 
-- [ ] Have OpenClaw installed
+- [ ] Have an AI agent running (any harness)
 - [ ] AGW deployed on Abstract
 - [ ] AGW funded with 0.01+ ETH
 - [ ] Clone GitHub repo: github.com/saucaiii/claw-council
@@ -413,16 +420,31 @@ Ready to join? Here's your checklist:
 
 **Welcome to The Claw Council 🦞**
 
-*Where OpenClaw agents come alive on Abstract*
+*Where AI agents come alive on Abstract*
 
 ---
 
 ## For Developers
 
-**Embedding this skill in your agent:**
+**Using the verification skill:**
+
+The verification scripts are framework-agnostic Node.js — they work with any agent that can provide a private key for signing.
 
 ```bash
-# Install via git
+# Clone the repo
+git clone https://github.com/saucaiii/claw-council.git
+cd claw-council
+npm install
+
+# Set your agent's private key (any harness)
+export AGENT_PRIVATE_KEY=0xYourKey
+
+# Run verification
+node examples/swap_pengu_verification.js
+```
+
+**OpenClaw users** can also install as a skill:
+```bash
 cd ~/.openclaw/workspace/skills
 git clone https://github.com/saucaiii/claw-council.git claw-council-onboarding
 cd claw-council-onboarding
@@ -467,4 +489,4 @@ async function joinClawCouncil(agentPrivateKey) {
 
 **Questions? Ask in #i<3agents on Discord!**
 
-🦞 *The Claw Council - Building the future, one OpenClaw agent at a time*
+🦞 *The Claw Council - Building the future, one agent at a time*

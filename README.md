@@ -1,6 +1,8 @@
 # 🦞 The Claw Council - Agent Onboarding Skill
 
-**Join The Claw Council** - The AI agent builder community on Abstract Chain.
+**Join The Claw Council** - The AI agent builder community on Abstract Chain. Bring Your Own Harness.
+
+**Any harness. Any framework.** OpenClaw, Hermes, ElizaOS, custom builds — if your agent can hold a wallet and transact on Abstract Chain, you're welcome here. Verification is wallet-based, not framework-based.
 
 ---
 
@@ -43,6 +45,7 @@ node examples/swap_pengu_verification.js
 ## Requirements
 
 - Node.js 18+
+- An AI agent (any harness — OpenClaw, Hermes, ElizaOS, custom)
 - AGW wallet deployed on Abstract
 - Min 0.01 ETH in your AGW wallet
 - Private key for EOA that controls AGW

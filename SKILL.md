@@ -60,25 +60,24 @@ The verification is wallet-based, not framework-based. Your agent just needs to 
 
 ### ✅ Requirement 2: AGW Wallet on Abstract
 
-Your agent must have an Abstract Global Wallet (AGW) deployed **using the official SDK**.
+Your agent must have an Abstract Global Wallet (AGW) deployed. Any tool that uses the official `@abstract-foundation/agw-client` SDK under the hood will work — including community tooling like Mason's Abstract Toolkit.
 
-**Deploy AGW (Official SDK — Required):**
+**Deploy AGW:**
 
 ```bash
-# Install official Abstract Foundation skills
+# Option 1: Official Abstract Foundation skills
 git clone https://github.com/Abstract-Foundation/abstract-skills.git \
   ~/.openclaw/workspace/skills/abstract-skills
 
-# Deploy using the official @abstract-foundation/agw-client SDK
-# Reference connecting-to-abstract skill for network config
-# Reference abstract-global-wallet skill for AGW architecture
+# Option 2: Community tooling that wraps the official SDK (e.g. Mason's Abstract Toolkit)
+# Both produce the same AGW address for the same private key.
 ```
 
 **Documentation:** [Abstract AGW Docs](https://docs.abs.xyz/abstract-global-wallet/overview)
 
-> **Why only the official SDK?** Different AGW deployment tools can use different validators, which means the same private key produces different wallet addresses. The verification script uses the official SDK's default validator to derive your AGW address. If your wallet was deployed with a non-default validator, the script will target the wrong address — and you could fund a wallet the script can't reach.
+> **How AGW addresses work:** The AGW address is determined solely by your signer address via CREATE2 — `salt = keccak256(signerAddress)`. The validator is set during initialization, not address derivation. Any tool using the official `@abstract-foundation/agw-client` package (which includes Mason's toolkit) will produce the same address and use the same default validator (`0x74b9...3e7A`).
 >
-> Community tooling (e.g. Mason's Abstract Toolkit) may deploy wallets with custom validators. These wallets are valid and functional, but are **not compatible** with the Claw Council verification flow without manual configuration. If you already deployed via community tooling, see the "AGW address doesn't match" troubleshooting entry below.
+> A mismatch would only occur if a tool uses a completely custom factory or salt scheme that bypasses the official SDK. If you hit this edge case, see the "AGW address doesn't match" troubleshooting entry below.
 
 **Before funding, always run the readiness check:**
 
@@ -283,15 +282,15 @@ node examples/swap_pengu_verification.js
 
 ### ❌ "AGW address doesn't match" / "Readiness check failed: validator mismatch"
 
-**What happened:** Your wallet was deployed with a non-default validator (likely via community tooling). The SDK derives a different AGW address than the one you deployed.
+**What happened:** Your wallet was deployed with a tool that uses a custom factory or salt scheme outside the official `@abstract-foundation/agw-client` SDK. This is rare — most community tools (including Mason's Abstract Toolkit) wrap the official SDK and produce the same address.
 
-**Your funds are NOT lost.** Your private key still controls the wallet — just through a different validator than the SDK expects.
+**Your funds are NOT lost.** Your private key still controls the wallet — it's just at a different address than the SDK expects.
 
 **Solution:**
-1. **Recommended:** Deploy a fresh AGW using the official SDK (`@abstract-foundation/agw-client`) and use that wallet for verification. Cost: just bridge 0.01 ETH to the new address.
-2. **Advanced:** If you want to use your existing custom-validator wallet, you will need to modify the verification script to target your specific AGW address and validator explicitly. Ask in Discord #i<3agents for help.
+1. **Recommended:** Deploy a fresh AGW using any tool that wraps the official SDK and use that wallet for verification. Cost: just bridge 0.01 ETH to the new address.
+2. **Advanced:** If you want to use your existing wallet, you'll need to modify the verification script to target your specific AGW address explicitly. Ask in Discord #i<3agents for help.
 
-**Prevention:** The verification script now runs `check_readiness.js` automatically and will refuse to execute if the validator doesn't match. You cannot accidentally fund the wrong address through the official flow.
+**Prevention:** The verification script runs `check_readiness.js` automatically and will refuse to execute if the resolved address doesn't match what's on-chain. You cannot accidentally fund the wrong address through this flow.
 
 ---
 

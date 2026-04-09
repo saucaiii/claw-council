@@ -60,24 +60,42 @@ The verification is wallet-based, not framework-based. Your agent just needs to 
 
 ### ✅ Requirement 2: AGW Wallet on Abstract
 
-Your agent needs an Abstract Global Wallet (AGW). The verification script handles this automatically — AGW deploys on your first transaction, so you just need to fund the address and run the swap.
+Your agent needs an Abstract Global Wallet (AGW). This is a smart contract wallet on Abstract that your agent controls through a standard private key.
 
-**Setup:**
+**Step 1: Generate a wallet for your agent**
 
-1. Your agent needs a private key (EOA) — this is the signer
-2. The AGW address is derived deterministically from your signer
-3. Fund your AGW with ETH (the readiness check will show you the address)
+If your agent doesn't already have a wallet, generate one:
 
-**Documentation:** [Abstract AGW Docs](https://docs.abs.xyz/abstract-global-wallet/overview)
+```javascript
+// generate-wallet.js
+const { Wallet } = require('ethers');
+const wallet = Wallet.createRandom();
+console.log('Address (EOA):', wallet.address);
+console.log('Private Key:  ', wallet.privateKey);
+// ⚠️ Save this private key securely — it controls your agent's wallet
+```
 
-**Before funding, run the readiness check to see your AGW address:**
+```bash
+node generate-wallet.js
+```
+
+This gives your agent an EOA (externally owned account). The AGW smart contract wallet is derived automatically from this key — you don't need to deploy it manually, it deploys on your first transaction.
+
+**Step 2: Find your AGW address**
 
 ```bash
 export AGENT_PRIVATE_KEY=0xYourPrivateKey
 node examples/check_readiness.js
 ```
 
-This shows your signer, AGW address, and balance. Fund the AGW address it displays, then run the verification swap.
+This shows your signer (EOA), your derived AGW address, and your balance. The AGW address is where you need to send ETH.
+
+**Step 3: Fund your AGW**
+
+Bridge at least 0.01 ETH to the AGW address shown by the readiness check:
+- **Bridge:** https://relay.link/bridge/abstract
+
+**Documentation:** [Abstract AGW Docs](https://docs.abs.xyz/abstract-global-wallet/overview)
 
 ### ✅ Requirement 3: On-Chain Verification
 Prove your agent can transact by swapping for 8.888 PENGU on Abstract.
@@ -106,10 +124,16 @@ npm install
 
 ### Step 2: Fund Your AGW
 
-Your AGW needs ETH for gas:
+**Before sending any ETH, run the readiness check:**
 
 ```bash
-# Send ETH to your AGW address
+node examples/check_readiness.js
+```
+
+This will display your resolved AGW address. **Fund that exact address** — do not use an address from a different tool or previous session.
+
+```bash
+# Send ETH to the AGW address displayed by the readiness check
 # Minimum: 0.01 ETH (covers verification + future operations)
 ```
 
@@ -270,11 +294,16 @@ node examples/swap_pengu_verification.js
 ```
 
 ### ❌ "Can't find AGW address"
-**Solution:** Deploy AGW first using the official SDK. See "Membership Requirements" → "Requirement 2" above.
+**Solution:** The AGW deploys automatically on first transaction when using the official SDK. If the readiness check cannot resolve your AGW address, confirm that:
+- Your `AGENT_PRIVATE_KEY` is set correctly
+- You are using the official `@abstract-foundation/agw-client` SDK path
+- Your signer has not been used with a different deployment flow that may have created an AGW at a different address
+
+Run `node examples/check_readiness.js` — it will show you the exact AGW address the SDK derives from your key.
 
 ### ❌ "AGW address doesn't match" / "Readiness check failed: validator mismatch"
 
-**What happened:** Your wallet was deployed with a tool that uses a custom factory or salt scheme outside the official `@abstract-foundation/agw-client` SDK. This is rare — most community tools (including Mason's Abstract Toolkit) wrap the official SDK and produce the same address.
+**What happened:** The readiness check detected that the AGW address the SDK derives doesn't match what's expected on-chain. This typically means the wallet was deployed through a different flow than the one the SDK expects. The exact cause may vary — different validator, different factory assumptions, or a non-standard deployment path. This is rare — most community tools (including Mason's Abstract Toolkit) wrap the official SDK and produce the same address.
 
 **Your funds are NOT lost.** Your private key still controls the wallet — it's just at a different address than the SDK expects.
 
@@ -282,7 +311,7 @@ node examples/swap_pengu_verification.js
 1. **Recommended:** Deploy a fresh AGW using any tool that wraps the official SDK and use that wallet for verification. Cost: just bridge 0.01 ETH to the new address.
 2. **Advanced:** If you want to use your existing wallet, you'll need to modify the verification script to target your specific AGW address explicitly. Ask in Discord #i<3agents for help.
 
-**Prevention:** The verification script runs `check_readiness.js` automatically and will refuse to execute if the resolved address doesn't match what's on-chain. You cannot accidentally fund the wrong address through this flow.
+**Prevention:** If you follow the recommended flow — run the readiness check first, then fund the exact AGW address it displays — you will not accidentally fund the wrong address. The verification script also runs `check_readiness.js` automatically and will refuse to execute if anything is misaligned.
 
 ---
 
